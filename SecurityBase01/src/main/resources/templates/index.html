@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security 6</title>
+</head>
+<body>
+<h2>Welcome back [[${#authentication.name}]]</h2>
+<h3>Authorities: [[${#authentication.authorities}]]</h3>
+<ul th:if="${#authentication.authenticated}">
+    <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Admin</li>
+    <li th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''USER'')')}">
+        Admin or User
+    </li>
+    <li th:if="${#authorization.expression('hasRole(''GUEST'')')}">Guest</li>
+</ul>
+<hr>
+<a th:href="@{'/logout'}">Logout</a> |
+<a href="https://www.baeldung.com/spring-security-thymeleaf">Spring Security with Thymeleaf</a>
+</body>
+</html>
