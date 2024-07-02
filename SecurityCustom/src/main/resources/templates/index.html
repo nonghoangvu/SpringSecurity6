@@ -9,5 +9,7 @@
 <h3>Welcome back <b>[[${authenticated.fullName}]]</b></h3>
 <p>Here is your url of photo <i>[[${authenticated.photo}]]</i></p>
 <p>Your role: [[${authenticated.role}]]</p>
+<p>Session username: <i th:text="${session.userSession.username}"></i></p>
+<p>Authentication: <i th:text="${#authentication.principal.photo}"></i></p>
 </body>
 </html>

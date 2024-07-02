@@ -23,7 +23,7 @@ public class AppController {
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        model.addAttribute("message", "Login with role admin");
+        model.addAttribute("message", "Login with role " + this.getAuthenticatedUser().getRole());
         return "index";
     }
 

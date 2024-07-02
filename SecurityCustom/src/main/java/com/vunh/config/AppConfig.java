@@ -1,6 +1,8 @@
 package com.vunh.config;
 
+import com.vunh.entity.User;
 import com.vunh.enums.RoleEnum;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -45,6 +48,11 @@ public class AppConfig {
     @Bean
     AuthenticationSuccessHandler customAuthenticationSuccessHandler() {//Handle login when role is ?
         return (request, response, authentication) -> {
+            //Can remove
+            User user = (User) authentication.getPrincipal();
+            HttpSession session = request.getSession();
+            session.setAttribute("userSession", user);
+            //
             String redirectUrl = authentication.getAuthorities().stream()
                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(RoleEnum.ADMIN.name()))
                     ? "/admin"
@@ -61,5 +69,10 @@ public class AppConfig {
 //            request.setAttribute("error", "Invalid username or password");
 //            request.getRequestDispatcher("/login?error").forward(request, response);
 //        };
+//    }
+
+//    @Bean
+//    LogoutHandler customLogoutHandler() {
+//
 //    }
 }
